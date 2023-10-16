@@ -11,22 +11,37 @@ namespace TerrariaRemade.Content.Engine
 {
     static class TileMap
     {
-        public static int[,] map = new int[128,128];
-        public static int[,] lightMap = new int[128,128];
+        public static int[,] map = new int[64,64];
+        public static Color[,] lightMap = new Color[64,64];
         public static float scale = 5;
         public static int tileSize = 8;
+
+        private static bool updateLighting = false;
 
         public static void FillTile(int x, int y, int tileID)
         {
             map[x, y] = tileID;
+            updateLighting = true;
         }
 
         public static void Render(SpriteBatch spriteBatch)
         {
+            if (updateLighting)
+            {
+                CalculateLighting();
+                updateLighting = false;
+            }
             for (int x = 0; x < map.GetLength(0); x++)
             {
                 for (int y = 0; y < map.GetLength(1); y++)
                 {
+                    if (lightMap[x, y].ToVector3().Length() < 0.4f && TileExists(x, y))
+                    { 
+                        spriteBatch.Draw(TextureLoader.shadow, new Vector2(x, y) * tileSize * scale,
+                        null, Color.White, 0, Vector2.Zero, scale * 8, 0, 0);
+                        continue;
+                    }     
+
                     Tile tile = TileDictionary.tileDictionary[map[x, y]];
 
                     if (tile == null)
@@ -34,89 +49,97 @@ namespace TerrariaRemade.Content.Engine
                     Texture2D sprite = tile.sprite;
 
                     spriteBatch.Draw(sprite, new Vector2(x, y) * tileSize * scale,
-                        null, Color.White, 0, Vector2.Zero, scale, 0, 0);
+                        null, lightMap[x, y], 0, Vector2.Zero, scale, 0, 0);
+                }
+            }
+        }
+        private static void CalculateLighting()
+        {
+            for (int x = 0; x < lightMap.GetLength(0); x++)
+            {
+                for (int y = 0; y < lightMap.GetLength(1); y++)
+                {
+                    lightMap[x, y] = GetLighting(x, y);
                 }
             }
         }
 
         public static Color GetLighting(int x, int y)
         {
-            float upLeft = TileExists(x - 1, y + 1) ? 0 : 1;
-            float up = TileExists(x, y + 1) ? 0 : 1;
-            float upRight = TileExists(x + 1, y + 1) ? 0 : 1;
-            float midLeft = TileExists(x - 1, y) ? 0 : 1;
-            float mid = TileExists(x, y) ? 0 : 1;
-            float midRight = TileExists(x + 1, y + 1) ? 0 : 1;
-            float downLeft = TileExists(x - 1, y - 1) ? 0 : 1;
-            float down = TileExists(x, y - 1) ? 0 : 1;
-            float downRight = TileExists(x + 1, y - 1) ? 0 : 1;
+            float factor = GetTileFactor(x, y, 8);
+            return new Color(factor, factor, factor);
+            int spread = 8;
 
-            float light = (upLeft + up + upRight + midLeft + mid + midRight + downLeft + down + downRight) / 9;
+            float upLeft = 8;
+            float up = 8;
+            float upRight = 8;
+            float midLeft = 8;
+            float midRight = 8;
+            float downLeft = 8;
+            float down = 8;
+            float downRight = 8;
 
-            return new Color(light, light, light);
+            CalculateLightFactor(x, y, ref upLeft, new Vector2(-1, 1), spread);
+            CalculateLightFactor(x, y, ref up, new Vector2(0, 1), spread);
+            CalculateLightFactor(x, y, ref upRight, new Vector2(1, 1), spread);
+            CalculateLightFactor(x, y, ref midLeft, new Vector2(-1, 0), spread);
+            CalculateLightFactor(x, y, ref midRight, new Vector2(1, 0), spread);
+            CalculateLightFactor(x, y, ref downLeft, new Vector2(-1, -1), spread);
+            CalculateLightFactor(x, y, ref down, new Vector2(0, -1), spread);
+            CalculateLightFactor(x, y, ref downRight, new Vector2(1, -1), spread);
 
-            float upFactor = 8;
-            float rightFactor = 8;
-            float downFactor = 8;
-            float leftFactor = 8;
-
-            for (int u = 0; u < 8; u++)
-            {
-                if (TileExists(x, y + u))
-                {
-                    upFactor--;
-                }
-                else
-                {
-                    upFactor++;
-                }
-            }
-            for (int r = 0; r < 8; r++)
-            {
-                if (TileExists(x + r, y))
-                {
-                    rightFactor--;
-                }
-                else
-                {
-                    rightFactor++;
-                }
-            }
-            for (int d = 0; d < 8; d++)
-            {
-                if (TileExists(x, y - d))
-                {
-                    downFactor--;
-                }
-                else
-                {
-                    downFactor++;
-                }
-            }
-            for (int l = 0; l < 8; l++)
-            {
-                if (TileExists(x - l, y))
-                {
-                    leftFactor--;
-                }
-                else
-                {
-                    leftFactor++;
-                }
-            }
-
-            upFactor = Math.Clamp(upFactor + 1, -1, 8)/8;
-            rightFactor = Math.Clamp(rightFactor + 1, -1, 8)/8;
-            downFactor = Math.Clamp(downFactor + 1, -1, 8)/8;
-            leftFactor = Math.Clamp(leftFactor + 1, -1, 8)/8;
-
-            float lightingFactor = (upFactor + rightFactor + downFactor + leftFactor)/4;
+            float lightingFactor = (upLeft + up + upRight + midLeft + midRight + downLeft + down + downRight) / (spread * 8f);
             return new Color(lightingFactor, lightingFactor, lightingFactor);
+        }
+        private static void CalculateLightFactor(int x, int y, ref float factor, Vector2 direction, int spread = 4)
+        {
+            for (int i = 1; i < spread; i++)
+            {
+                if (TileExists(x + ((int)direction.X * i), y + ((int)direction.Y) * i))
+                {
+                    factor--;
+                }
+                else
+                {
+                    factor++;
+                    break;
+                }
+            }
+        }
+        private static float GetTileFactor(int x, int y, int radius)
+        {
+            int tileCount = 0;
+            for (int z = -radius; z < radius; z++)
+            {
+                for (int w = -radius; w < radius; w++)
+                {
+                    if (!TileExists(x + z, y + w))
+                        tileCount++;
+                }
+            }
+            return (float)tileCount/(radius * radius);
         }
 
         public static bool TileExists(int x, int y)
         {
-            return x < 0 || y < 0 ? false : map[x, y] != 0;
+            return TileInBounds(x, y) ? map[x, y] != 0 : false;
+        }
+        public static bool TileInBounds(int x, int y)
+        {
+            return !(x < 0 || y < 0 || x > map.GetLength(0) - 1 || y > map.GetLength(1) - 1);
+        }
+        public static Tile GetTile(int x, int y)
+        {
+            return TileDictionary.tileDictionary[map[x, y]];
+        }
+        public static Vector2 ScreenToTilePosition(Vector2 position)
+        {
+            position /= (tileSize * scale);
+
+            int x = (int)position.X;
+            int y = (int)position.Y;
+
+            return new Vector2(x, y);
         }
     }
 }

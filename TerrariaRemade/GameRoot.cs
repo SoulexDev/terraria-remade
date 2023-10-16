@@ -14,8 +14,6 @@ namespace TerrariaRemade
         public static Viewport Viewport { get { return Instance.GraphicsDevice.Viewport; } }
         public static Vector2 ScreenSize { get { return new Vector2(Viewport.Width, Viewport.Height); } }
 
-        private Camera cam = new Camera();
-
         private GraphicsDeviceManager _graphics;
         public SpriteBatch _spriteBatch;
 
@@ -37,17 +35,17 @@ namespace TerrariaRemade
 
             base.Initialize();
 
-            EntityManager.Instantiate(cam);
+            EntityManager.Instantiate(Camera.Instance);
+            EntityManager.Instantiate(new BlockGrabber());
+            EntityManager.Instantiate(new CameraController());
+            Cursor.Init();
             TileMap.scale = 3;
 
             for (int x = 0; x < TileMap.map.GetLength(0); x++)
             {
                 for (int y = 0; y < TileMap.map.GetLength(1); y++)
                 {
-                    if(y <= 64 && x <= 64)
-                    {
-                        TileMap.FillTile(x, y, 1);
-                    }
+                    TileMap.FillTile(x, y, 2);
                 }
             }
         }
@@ -61,13 +59,12 @@ namespace TerrariaRemade
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
             Time.deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             Time.time = (float)gameTime.TotalGameTime.TotalSeconds;
 
+            Input.Update();
             EntityManager.Update();
+            Cursor.Update();
 
             base.Update(gameTime);
         }
@@ -76,10 +73,13 @@ namespace TerrariaRemade
         {
             GraphicsDevice.Clear(Color.LightBlue);
 
-            _spriteBatch.Begin(SpriteSortMode.Texture, BlendState.Opaque, SamplerState.PointClamp, transformMatrix: cam.Transform);
+            _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, transformMatrix: Camera.Instance.Transform);
 
             EntityManager.Draw(_spriteBatch);
+
             TileMap.Render(_spriteBatch);
+            Cursor.Draw(_spriteBatch);
+            //_spriteBatch.Draw(TextureLoader.cursor, Input.MousePosition, null, Color.White, 0, Vector2.Zero, 5, 0, 1);
 
             _spriteBatch.End();
 

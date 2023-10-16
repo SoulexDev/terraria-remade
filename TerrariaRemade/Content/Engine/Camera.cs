@@ -9,6 +9,7 @@ namespace TerrariaRemade.Content.Engine
 {
     public class Camera : Entity
     {
+        public static Camera Instance = new Camera();
         public Matrix Transform;
 
         public override void Awake()
