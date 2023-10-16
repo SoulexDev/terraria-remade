@@ -1,3 +1,3 @@
 ﻿
-using var game = new TerrariaRemade.Game1();
+using var game = new TerrariaRemade.GameRoot();
 game.Run();

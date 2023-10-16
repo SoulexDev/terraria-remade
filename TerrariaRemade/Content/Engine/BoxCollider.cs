@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace TerrariaRemade.Content.Engine
 {
-    internal class GameBehaviour
+    internal class BoxCollider
     {
-        public void Update()
+        public Rectangle bounds;
+
+        public void UpdateBox(Transform transform)
         {
-            
+            bounds.Location = new Point();
         }
     }
 }
