@@ -40,16 +40,27 @@ namespace TerrariaRemade.Content.Engine
     }
     public class Renderer
     {
-        public Color color;
+        public Color color = Color.White;
         public float layerDepth;
         public Texture2D sprite;
-        public void Render(SpriteBatch spriteBatch, Transform transform)
+
+        public void Render(SpriteBatch spriteBatch, Transform transform = null, Vector2 position = default)
         {
-            spriteBatch.Begin();
-            spriteBatch.Draw(sprite, transform.position, Rectangle.Empty, color, transform.rotation, transform.origin, transform.scale, SpriteEffects.None, layerDepth);
-            spriteBatch.End();
+            if (sprite == null)
+                return;
+
+            if(transform == null)
+            {
+                spriteBatch.Draw(sprite, transform.position, null, color, transform.rotation, transform.origin, transform.scale, 0, layerDepth);
+            }
+            else
+            {
+                spriteBatch.Draw(sprite, transform.position, null, color, transform.rotation, transform.origin, transform.scale, 0, layerDepth);
+            }
+            if (sprite == null)
+                return;
         }
-        public Vector2 Size
+        public Vector2 size
         {
             get
             {
