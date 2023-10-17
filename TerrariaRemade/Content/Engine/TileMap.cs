@@ -28,7 +28,7 @@ namespace TerrariaRemade.Content.Engine
         {
             if (updateLighting)
             {
-                CalculateLighting();
+                CalculateLighting(2, 8);
                 updateLighting = false;
             }
             for (int x = 0; x < map.GetLength(0); x++)
@@ -53,13 +53,56 @@ namespace TerrariaRemade.Content.Engine
                 }
             }
         }
-        private static void CalculateLighting()
+        private static void CalculateLighting(int shadowPenalty = 1, int maxLightDepth = 8)
         {
             for (int x = 0; x < lightMap.GetLength(0); x++)
             {
-                for (int y = 0; y < lightMap.GetLength(1); y++)
+                int lightDepth = 0;
+                bool hitTile = false;
+                bool exitTile = false;
+
+                for (int y = 0; y <= x; y++)
                 {
-                    lightMap[x, y] = GetLighting(x, y);
+                    int xCoord = x - y;
+                    int yCoord = y;
+                    if(TileExists(xCoord, yCoord))
+                    {
+                        hitTile = true;
+                        float lightFactor = 1 - (float)(lightDepth + (exitTile ? shadowPenalty : 0)) / maxLightDepth;
+
+                        //lightFactor/=GetTileFactor(xCoord, yCoord, 2);
+                        
+                        lightMap[xCoord, yCoord] = new Color(lightFactor, lightFactor, lightFactor);
+
+                        lightDepth++;
+                    }
+                    else if(hitTile)
+                        exitTile = true;
+                }
+            }
+            for (int y = 0; y < lightMap.GetLength(1); y++)
+            {
+                int lightDepth = 0;
+                bool hitTile = false;
+                bool exitTile = false;
+
+                for (int x = 0; x <= y; x++)
+                {
+                    int xCoord = y - x;
+                    int yCoord = y;
+                    if (TileExists(xCoord, yCoord))
+                    {
+                        hitTile = true;
+                        float lightFactor = 1 - (float)(lightDepth + (exitTile ? shadowPenalty : 0)) / maxLightDepth;
+
+                        //lightFactor/=GetTileFactor(xCoord, yCoord, 2);
+
+                        lightMap[xCoord, yCoord] = new Color(lightFactor, lightFactor, lightFactor);
+
+                        lightDepth++;
+                    }
+                    else if (hitTile)
+                        exitTile = true;
                 }
             }
         }
