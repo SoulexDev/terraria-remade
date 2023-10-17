@@ -12,22 +12,22 @@ namespace TerrariaRemade.Content.Engine
     {
         public static Texture2D cursorSprite;
         public static Transform transform = new Transform();
-        private static TileCollider tileCollider = new TileCollider();
+        //private static TileCollider tileCollider = new TileCollider();
 
         public static void Init()
         {
-            tileCollider.transform = transform;
+            //tileCollider.transform = transform;
             
             cursorSprite = TextureLoader.cursor;
-            tileCollider.rectangle = new Rectangle((int)transform.position.X, (int)transform.position.Y, cursorSprite.Width, cursorSprite.Height);
+            //tileCollider.rectangle = new Rectangle((int)transform.position.X, (int)transform.position.Y, cursorSprite.Width, cursorSprite.Height);
 
             transform.scale = Vector2.One * 2;
         }
         public static void Update()
         {
-            Vector2 prevPos = transform.position;
+            //Vector2 prevPos = transform.position;
             transform.position = Input.MousePosition;
-            tileCollider.CheckCollisions(prevPos);
+            //tileCollider.CheckCollisions(prevPos);
         }
         public static void Draw(SpriteBatch spriteBatch)
         {

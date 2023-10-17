@@ -13,12 +13,15 @@ namespace TerrariaRemade.Content.Scripts
     {
         private Camera cam;
         private float moveSpeed = 500;
-        private TileCollider tileCollider = new TileCollider();
+        //private TileCollider tileCollider = new TileCollider();
         public override void Awake()
         {
             cam = Camera.Instance;
-            tileCollider.transform = transform;
-            tileCollider.rectangle = new Rectangle((int)transform.position.X, (int)transform.position.Y, 100, 100);
+            renderer.sprite = TextureLoader.character;
+            //tileCollider.transform = transform;
+            transform.scale = Vector2.One * 3;
+            transform.origin = renderer.size / 2;
+            //tileCollider.rectangle = new Rectangle(transform.position.ToPoint(), (renderer.size * 3).ToPoint());
         }
 
         public override void Start()
@@ -29,19 +32,19 @@ namespace TerrariaRemade.Content.Scripts
         public override void Update()
         {
             Vector2 moveVector = Vector2.Zero;
-            if (Input.GetKey(Keys.A) && !tileCollider.collidingLeft)
+            if (Input.GetKey(Keys.A))
             {
                 moveVector.X -= Time.deltaTime * moveSpeed;
             }
-            if (Input.GetKey(Keys.D) && !tileCollider.collidingRight)
+            if (Input.GetKey(Keys.D))
             {
                 moveVector.X += Time.deltaTime * moveSpeed;
             }
-            if (Input.GetKey(Keys.W) && !tileCollider.collidingUp)
+            if (Input.GetKey(Keys.W))
             {
                 moveVector.Y -= Time.deltaTime * moveSpeed;
             }
-            if (Input.GetKey(Keys.S) && !tileCollider.collidingDown)
+            if (Input.GetKey(Keys.S))
             {
                 moveVector.Y += Time.deltaTime * moveSpeed;
             }
@@ -50,7 +53,7 @@ namespace TerrariaRemade.Content.Scripts
 
             transform.position += moveVector;
 
-            tileCollider.CheckCollisions(prevPos);
+            //tileCollider.CheckCollisions(prevPos);
 
             cam.transform.position = transform.position;
         }
