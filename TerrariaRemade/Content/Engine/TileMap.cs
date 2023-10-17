@@ -35,7 +35,7 @@ namespace TerrariaRemade.Content.Engine
             {
                 for (int y = 0; y < map.GetLength(1); y++)
                 {
-                    if (lightMap[x, y].ToVector3().Length() < 0.4f && TileExists(x, y))
+                    if (lightMap[x, y].ToVector3().Length() < 0.3f && TileExists(x, y))
                     { 
                         spriteBatch.Draw(TextureLoader.shadow, new Vector2(x, y) * tileSize * scale,
                         null, Color.White, 0, Vector2.Zero, scale * 8, 0, 0);
@@ -109,16 +109,39 @@ namespace TerrariaRemade.Content.Engine
         private static float GetTileFactor(int x, int y, int radius)
         {
             int tileCount = 0;
+            int maxTileCount = 0;
             for (int z = -radius; z < radius; z++)
             {
                 for (int w = -radius; w < radius; w++)
                 {
-                    if (!TileExists(x + z, y + w))
+                    maxTileCount++;
+                    if (TileExists(x + z, y + w))
                         tileCount++;
                 }
             }
-            return (float)tileCount/(radius * radius);
+            return 1 - tileCount / (maxTileCount * 1.2f);
         }
+        //private static float GetTileCircle(int x, int y, int radius)
+        //{
+        //    int tileCount = 0;
+        //    int maxPossibleTileCount = 0;
+        //    for (int row = y - radius; row < y + radius; row++)
+        //    {
+        //        int rowDif = row - y;
+        //        int columnRange = (int)MathF.Sqrt(radius * radius - rowDif * rowDif);
+
+        //        for (int column = x - columnRange; column < x + columnRange; column++)
+        //        {
+        //            maxPossibleTileCount++;
+
+        //            if(TileExists(column, row))
+        //            {
+        //                tileCount++;
+        //            }
+        //        }
+        //    }
+        //    return 1 - tileCount / (maxPossibleTileCount * 1.2f);
+        //}
 
         public static bool TileExists(int x, int y)
         {

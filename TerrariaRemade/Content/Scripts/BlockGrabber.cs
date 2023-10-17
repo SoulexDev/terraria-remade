@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,6 +12,7 @@ namespace TerrariaRemade.Content.Scripts
 {
     public class BlockGrabber : Entity
     {
+        private int brushRadius = 1;
         public override void Awake()
         {
             
@@ -23,17 +25,36 @@ namespace TerrariaRemade.Content.Scripts
 
         public override void Update()
         {
+            if (Input.GetKeyDown(Keys.E))
+                brushRadius++;
+            if(Input.GetKeyDown(Keys.Q))
+                brushRadius--;
+
             if (Input.GetMouse("LeftButton"))
             {
                 Vector2 tilePos = TileMap.ScreenToTilePosition(Input.MousePosition);
-                if (TileMap.TileExists((int)tilePos.X, (int)tilePos.Y))
-                    TileMap.FillTile((int)tilePos.X, (int)tilePos.Y, 0);
+
+                for (int x = -brushRadius; x < brushRadius; x++)
+                {
+                    for (int y = -brushRadius; y < brushRadius; y++)
+                    {
+                        if (TileMap.TileExists((int)tilePos.X + x, (int)tilePos.Y + y))
+                            TileMap.FillTile((int)tilePos.X + x, (int)tilePos.Y + y, 0);
+                    }
+                }
             }
             if (Input.GetMouse("RightButton"))
             {
                 Vector2 tilePos = TileMap.ScreenToTilePosition(Input.MousePosition);
-                if (TileMap.TileInBounds((int)tilePos.X, (int)tilePos.Y) && !TileMap.TileExists((int)tilePos.X, (int)tilePos.Y))
-                    TileMap.FillTile((int)tilePos.X, (int)tilePos.Y, 1);
+
+                for (int x = -brushRadius; x < brushRadius; x++)
+                {
+                    for (int y = -brushRadius; y < brushRadius; y++)
+                    {
+                        if (TileMap.TileInBounds((int)tilePos.X + x, (int)tilePos.Y + y) && !TileMap.TileExists((int)tilePos.X + x, (int)tilePos.Y + y))
+                            TileMap.FillTile((int)tilePos.X + x, (int)tilePos.Y + y, 1);
+                    }
+                }
             }
         }
     }
