@@ -4,11 +4,11 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/power/Documents/GitHub/terraria-remade/TerrariaRemade/Content/Sprites/Blocks/GrassBlock.png</File>
-    <File>C:/Users/power/Documents/GitHub/terraria-remade/TerrariaRemade/Content/Sprites/Blocks/Shadow.png</File>
-    <File>C:/Users/power/Documents/GitHub/terraria-remade/TerrariaRemade/Content/Sprites/Blocks/StoneBlock.png</File>
-    <File>C:/Users/power/Documents/GitHub/terraria-remade/TerrariaRemade/Content/Sprites/Character.png</File>
-    <File>C:/Users/power/Documents/GitHub/terraria-remade/TerrariaRemade/Content/Sprites/Cursor.png</File>
+    <File>F:/Git_Repos/terraria-remade/TerrariaRemade/Content/Sprites/Blocks/GrassBlock.png</File>
+    <File>F:/Git_Repos/terraria-remade/TerrariaRemade/Content/Sprites/Blocks/Shadow.png</File>
+    <File>F:/Git_Repos/terraria-remade/TerrariaRemade/Content/Sprites/Blocks/StoneBlock.png</File>
+    <File>F:/Git_Repos/terraria-remade/TerrariaRemade/Content/Sprites/Character.png</File>
+    <File>F:/Git_Repos/terraria-remade/TerrariaRemade/Content/Sprites/Cursor.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />
