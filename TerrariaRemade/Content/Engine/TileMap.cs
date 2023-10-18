@@ -11,8 +11,8 @@ namespace TerrariaRemade.Content.Engine
 {
     static class TileMap
     {
-        public static int[,] map = new int[64,64];
-        public static Color[,] lightMap = new Color[64,64];
+        public static int[,] map = new int[64, 256];
+        public static Color[,] lightMap = new Color[64, 256];
         public static float scale = 5;
         public static int tileSize = 8;
 
@@ -28,19 +28,22 @@ namespace TerrariaRemade.Content.Engine
         {
             if (updateLighting)
             {
-                CalculateLighting(2, 8);
+                CalculateLighting(1, 16);
                 updateLighting = false;
             }
             for (int x = 0; x < map.GetLength(0); x++)
             {
                 for (int y = 0; y < map.GetLength(1); y++)
                 {
+                    if (!Camera.Instance.IsInFrustum(new Vector2(x, y) * tileSize * scale))
+                        continue;
+
                     if (lightMap[x, y].ToVector3().Length() < 0.3f && TileExists(x, y))
                     { 
                         spriteBatch.Draw(TextureLoader.shadow, new Vector2(x, y) * tileSize * scale,
                         null, Color.White, 0, Vector2.Zero, scale * 8, 0, 0);
                         continue;
-                    }     
+                    }
 
                     Tile tile = TileDictionary.tileDictionary[map[x, y]];
 
@@ -65,12 +68,11 @@ namespace TerrariaRemade.Content.Engine
                 {
                     int xCoord = x - y;
                     int yCoord = y;
+
                     if(TileExists(xCoord, yCoord))
                     {
                         hitTile = true;
                         float lightFactor = 1 - (float)(lightDepth + (exitTile ? shadowPenalty : 0)) / maxLightDepth;
-
-                        //lightFactor/=GetTileFactor(xCoord, yCoord, 2);
                         
                         lightMap[xCoord, yCoord] = new Color(lightFactor, lightFactor, lightFactor);
 
@@ -80,22 +82,25 @@ namespace TerrariaRemade.Content.Engine
                         exitTile = true;
                 }
             }
-            for (int y = 0; y < lightMap.GetLength(1); y++)
+
+            int yLength = lightMap.GetLength(1);
+            int xLength = lightMap.GetLength(0);
+
+            for (int y = 0; y < yLength; y++)
             {
                 int lightDepth = 0;
                 bool hitTile = false;
                 bool exitTile = false;
 
-                for (int x = 0; x <= y; x++)
+                for (int x = xLength; x >= 0; x--)
                 {
-                    int xCoord = y - x;
-                    int yCoord = y;
+                    int xCoord = x;
+                    int yCoord = y + xLength - x;
+
                     if (TileExists(xCoord, yCoord))
                     {
                         hitTile = true;
                         float lightFactor = 1 - (float)(lightDepth + (exitTile ? shadowPenalty : 0)) / maxLightDepth;
-
-                        //lightFactor/=GetTileFactor(xCoord, yCoord, 2);
 
                         lightMap[xCoord, yCoord] = new Color(lightFactor, lightFactor, lightFactor);
 
@@ -105,49 +110,31 @@ namespace TerrariaRemade.Content.Engine
                         exitTile = true;
                 }
             }
-        }
-
-        public static Color GetLighting(int x, int y)
-        {
-            float factor = GetTileFactor(x, y, 8);
-            return new Color(factor, factor, factor);
-            int spread = 8;
-
-            float upLeft = 8;
-            float up = 8;
-            float upRight = 8;
-            float midLeft = 8;
-            float midRight = 8;
-            float downLeft = 8;
-            float down = 8;
-            float downRight = 8;
-
-            CalculateLightFactor(x, y, ref upLeft, new Vector2(-1, 1), spread);
-            CalculateLightFactor(x, y, ref up, new Vector2(0, 1), spread);
-            CalculateLightFactor(x, y, ref upRight, new Vector2(1, 1), spread);
-            CalculateLightFactor(x, y, ref midLeft, new Vector2(-1, 0), spread);
-            CalculateLightFactor(x, y, ref midRight, new Vector2(1, 0), spread);
-            CalculateLightFactor(x, y, ref downLeft, new Vector2(-1, -1), spread);
-            CalculateLightFactor(x, y, ref down, new Vector2(0, -1), spread);
-            CalculateLightFactor(x, y, ref downRight, new Vector2(1, -1), spread);
-
-            float lightingFactor = (upLeft + up + upRight + midLeft + midRight + downLeft + down + downRight) / (spread * 8f);
-            return new Color(lightingFactor, lightingFactor, lightingFactor);
-        }
-        private static void CalculateLightFactor(int x, int y, ref float factor, Vector2 direction, int spread = 4)
-        {
-            for (int i = 1; i < spread; i++)
+            for (int x = 0; x < lightMap.GetLength(0); x++)
             {
-                if (TileExists(x + ((int)direction.X * i), y + ((int)direction.Y) * i))
+                for (int y = 0; y < lightMap.GetLength(1); y++)
                 {
-                    factor--;
-                }
-                else
-                {
-                    factor++;
-                    break;
+                    lightMap[x, y] = lightMap[x, y].Add(GetBlurColor(x, y, 4));
                 }
             }
+        }
+        public static Color GetBlurColor(int xCoord, int yCoord, int blurRadius)
+        {
+            float valueSum = 0;
+            int maxValue = 0;
+            for (int x = -blurRadius; x < blurRadius; x++)
+            {
+                for (int y = -blurRadius; y < blurRadius; y++)
+                {
+                    maxValue++;
+                    if (TileExists(xCoord + x, yCoord + y))
+                        valueSum += lightMap[xCoord + x, yCoord + y].R / 255;
+                    else
+                        valueSum++;
+                }
+            }
+            float blur = valueSum / maxValue;
+            return new Color(blur, blur, blur);
         }
         private static float GetTileFactor(int x, int y, int radius)
         {

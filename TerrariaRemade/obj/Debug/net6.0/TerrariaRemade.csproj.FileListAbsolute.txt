@@ -82,3 +82,4 @@ F:\Git_Repos\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Blo
 F:\Git_Repos\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Blocks\Shadow.xnb
 F:\Git_Repos\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Cursor.xnb
 C:\Users\power\Documents\GitHub\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Character.xnb
+F:\Git_Repos\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Character.xnb
