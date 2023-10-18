@@ -55,26 +55,26 @@ namespace TerrariaRemade.Content.Engine
             {
                 for (int y = (int)prevPos.Y - collisionRadius; y < collisionRadius + (int)prevPos.Y; y++)
                 {
-                    Vector2 tilePos = TileMap.ScreenToTilePosition(new Vector2(x, y));
+                    //Vector2 tilePos = TileMap.ScreenToTilePosition(new Vector2(x, y));
 
-                    if (!TileMap.TileExists((int)tilePos.X, (int)tilePos.Y))
-                    {
-                        continue;
-                    }
+                    //if (!TileMap.TileExists((int)tilePos.X, (int)tilePos.Y))
+                    //{
+                    //    continue;
+                    //}
 
-                    int tileSize = (int)(TileMap.tileSize * TileMap.scale);
+                    //int tileSize = (int)(TileMap.tileSize * TileMap.scale);
 
-                    Rectangle tileRect = new Rectangle(tilePos.ToPoint(),
-                        (Vector2.One * tileSize).ToPoint());
+                    //Rectangle tileRect = new Rectangle(tilePos.ToPoint(),
+                    //    (Vector2.One * tileSize).ToPoint());
 
-                    if (IsTouchingLeft(tileRect))
-                        transform.position.X = tileRect.Right + rectangle.Width / 2;
-                    if (IsTouchingRight(tileRect))
-                        transform.position.X = tileRect.Left - rectangle.Width / 2;
-                    if (IsTouchingUp(tileRect))
-                        transform.position.Y = tileRect.Bottom + rectangle.Height / 2;
-                    if (IsTouchingDown(tileRect))
-                        transform.position.Y = tileRect.Top - rectangle.Height / 2;
+                    //if (IsTouchingLeft(tileRect))
+                    //    transform.position.X = tileRect.Right + rectangle.Width / 2;
+                    //if (IsTouchingRight(tileRect))
+                    //    transform.position.X = tileRect.Left - rectangle.Width / 2;
+                    //if (IsTouchingUp(tileRect))
+                    //    transform.position.Y = tileRect.Bottom + rectangle.Height / 2;
+                    //if (IsTouchingDown(tileRect))
+                    //    transform.position.Y = tileRect.Top - rectangle.Height / 2;
                 }
             }
         }

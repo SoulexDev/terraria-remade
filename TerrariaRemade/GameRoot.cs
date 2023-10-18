@@ -39,15 +39,17 @@ namespace TerrariaRemade
             EntityManager.Instantiate(new BlockGrabber());
             EntityManager.Instantiate(new CameraController());
             Cursor.Init();
-            TileMap.scale = 3;
+            //TileMap.scale = 3;
 
-            for (int x = 0; x < TileMap.map.GetLength(0); x++)
-            {
-                for (int y = 0; y < TileMap.map.GetLength(1); y++)
-                {
-                    TileMap.FillTile(x, y, 2);
-                }
-            }
+            //for (int x = 0; x < TileMap.map.GetLength(0); x++)
+            //{
+            //    for (int y = 0; y < TileMap.map.GetLength(1); y++)
+            //    {
+            //        TileMap.FillTile(x, y, 2);
+            //    }
+            //}
+
+            TileManager.GenerateChunks();
         }
 
         protected override void LoadContent()
@@ -77,7 +79,7 @@ namespace TerrariaRemade
 
             EntityManager.Draw(_spriteBatch);
 
-            TileMap.Render(_spriteBatch);
+            TileManager.Render(_spriteBatch);
             Cursor.Draw(_spriteBatch);
             //_spriteBatch.Draw(TextureLoader.cursor, Input.MousePosition, null, Color.White, 0, Vector2.Zero, 5, 0, 1);
 
