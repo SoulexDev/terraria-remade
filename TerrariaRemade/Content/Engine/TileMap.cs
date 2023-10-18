@@ -9,22 +9,34 @@ using System.Threading.Tasks;
 
 namespace TerrariaRemade.Content.Engine
 {
-    static class TileMap
+    public class TileMap
     {
-        public static int[,] map = new int[64, 256];
-        public static Color[,] lightMap = new Color[64, 256];
-        public static float scale = 5;
-        public static int tileSize = 8;
+        public string name;
+        public Transform transform = new Transform();
+        public int[,] map = new int[64, 256];
+        public Color[,] lightMap = new Color[64, 256];
+        public float scale = 5;
+        public int tileSize = 8;
 
-        private static bool updateLighting = false;
+        private bool updateLighting = false;
 
-        public static void FillTile(int x, int y, int tileID)
+        public void Generate()
+        {
+            for (int x = 0; x < map.GetLength(0); x++)
+            {
+                for (int y = 0; y < map.GetLength(1); y++)
+                {
+                    FillTile(x, y, 2);
+                }
+            }
+        }
+        public void FillTile(int x, int y, int tileID)
         {
             map[x, y] = tileID;
             updateLighting = true;
         }
 
-        public static void Render(SpriteBatch spriteBatch)
+        public void Render(SpriteBatch spriteBatch)
         {
             if (updateLighting)
             {
@@ -35,12 +47,15 @@ namespace TerrariaRemade.Content.Engine
             {
                 for (int y = 0; y < map.GetLength(1); y++)
                 {
-                    if (!Camera.Instance.IsInFrustum(new Vector2(x, y) * tileSize * scale))
+                    float worldX = transform.position.X + x;
+                    float worldY = transform.position.Y + y;
+
+                    if (!Camera.Instance.IsInFrustum(new Vector2(worldX, worldY) * tileSize * scale))
                         continue;
 
                     if (lightMap[x, y].ToVector3().Length() < 0.3f && TileExists(x, y))
                     { 
-                        spriteBatch.Draw(TextureLoader.shadow, new Vector2(x, y) * tileSize * scale,
+                        spriteBatch.Draw(TextureLoader.shadow, new Vector2(worldX, worldY) * tileSize * scale,
                         null, Color.White, 0, Vector2.Zero, scale * 8, 0, 0);
                         continue;
                     }
@@ -51,12 +66,12 @@ namespace TerrariaRemade.Content.Engine
                         continue;
                     Texture2D sprite = tile.sprite;
 
-                    spriteBatch.Draw(sprite, new Vector2(x, y) * tileSize * scale,
+                    spriteBatch.Draw(sprite, new Vector2(worldX, worldY) * tileSize * scale,
                         null, lightMap[x, y], 0, Vector2.Zero, scale, 0, 0);
                 }
             }
         }
-        private static void CalculateLighting(int shadowPenalty = 1, int maxLightDepth = 8)
+        private void CalculateLighting(int shadowPenalty = 1, int maxLightDepth = 8)
         {
             for (int x = 0; x < lightMap.GetLength(0); x++)
             {
@@ -118,7 +133,7 @@ namespace TerrariaRemade.Content.Engine
                 }
             }
         }
-        public static Color GetBlurColor(int xCoord, int yCoord, int blurRadius)
+        public Color GetBlurColor(int xCoord, int yCoord, int blurRadius)
         {
             float valueSum = 0;
             int maxValue = 0;
@@ -136,7 +151,7 @@ namespace TerrariaRemade.Content.Engine
             float blur = valueSum / maxValue;
             return new Color(blur, blur, blur);
         }
-        private static float GetTileFactor(int x, int y, int radius)
+        private float GetTileFactor(int x, int y, int radius)
         {
             int tileCount = 0;
             int maxTileCount = 0;
@@ -173,26 +188,26 @@ namespace TerrariaRemade.Content.Engine
         //    return 1 - tileCount / (maxPossibleTileCount * 1.2f);
         //}
 
-        public static bool TileExists(int x, int y)
+        public bool TileExists(int x, int y)
         {
             return TileInBounds(x, y) ? map[x, y] != 0 : false;
         }
-        public static bool TileInBounds(int x, int y)
+        public bool TileInBounds(int x, int y)
         {
             return !(x < 0 || y < 0 || x > map.GetLength(0) - 1 || y > map.GetLength(1) - 1);
         }
-        public static Tile GetTile(int x, int y)
+        public Tile GetTile(int x, int y)
         {
             return TileDictionary.tileDictionary[map[x, y]];
         }
-        public static Vector2 ScreenToTilePosition(Vector2 position)
+        public Vector2 ScreenToTilePosition(Vector2 position)
         {
             position /= (tileSize * scale);
 
             int x = (int)position.X;
             int y = (int)position.Y;
 
-            return new Vector2(x, y);
+            return new Vector2(x, y) - transform.position;
         }
     }
 }
