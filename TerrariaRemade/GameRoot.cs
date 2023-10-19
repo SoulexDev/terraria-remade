@@ -49,7 +49,7 @@ namespace TerrariaRemade
             //    }
             //}
 
-            TileManager.GenerateChunks();
+            WorldGenerator.GenerateWorld();
         }
 
         protected override void LoadContent()

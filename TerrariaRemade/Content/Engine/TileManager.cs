@@ -11,25 +11,10 @@ namespace TerrariaRemade.Content.Engine
     public static class TileManager
     {
         public static int tileSize = 8;
-        public static float scale = 1;
+        public static float scale = 3;
         public static List<TileMap> chunks = new List<TileMap>();
-        private static int chunkAmount = 10;
+        public static int chunkAmount = 10;
 
-        public static void GenerateChunks()
-        {
-            for (int i = 0; i < chunkAmount; i++)
-            {
-                TileMap map = new TileMap();
-                map.transform.position.X = i * map.map.GetLength(0);
-
-                map.tileSize = tileSize;
-                map.scale = scale;
-
-                map.name = i.ToString();
-                map.Generate();
-                chunks.Add(map);
-            }
-        }
         public static Tile GetTile(int x, int y)
         {
             TileMap map = GetLocalMap(x);
@@ -44,13 +29,26 @@ namespace TerrariaRemade.Content.Engine
         {
             foreach (var tileMap in chunks)
             {
-                float xPosition = tileMap.transform.position.X * tileSize;
-                if (x >= xPosition && x < xPosition + tileMap.map.GetLength(0) * tileSize * scale)
+                float chunkSize = tileMap.map.GetLength(0) * tileSize * scale;
+
+                float chunkPosition = tileMap.transform.position.X;
+                if (x >= chunkPosition && x < chunkPosition + chunkSize)
                 {
+                    //Debug.WriteLine($"Mouse X - {x}, Chunk Position - {chunkPosition}, Chunk Name - {tileMap.name}");
                     return tileMap;
                 }
             }
             return null;
+        }
+        public static TileMap GetTileMapFromTileSpace(int x, float worldOffset)
+        {
+            float worldCoordinate = x * tileSize * scale + worldOffset;
+            return GetLocalMap((int)worldCoordinate);
+        }
+        public static int AdjustedTileCoord(int coord, int mapXLength)
+        {
+            coord -= mapXLength;
+            return coord;
         }
         public static void Render(SpriteBatch spriteBatch)
         {

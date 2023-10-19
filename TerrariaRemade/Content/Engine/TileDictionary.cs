@@ -11,8 +11,12 @@ namespace TerrariaRemade.Content.Engine
         public static Dictionary<int, Tile> tileDictionary = new Dictionary<int, Tile>()
         {
             { 0, null },
-            { 1, new Tile(TextureLoader.stoneBlock) },
-            { 2, new Tile(TextureLoader.grassBlock) }
+            { 1, new Tile(TextureLoader.grassBlock) },
+            { 2, new Tile(TextureLoader.dirtBlock) },
+            { 3, new Tile(TextureLoader.stoneBlock) },
+            { 4, new Tile(TextureLoader.tinBlock) },
+            { 5, new Tile(TextureLoader.ironBlock) },
+            { 6, new Tile(TextureLoader.titaniumBlock) }
         };
     }
 }

@@ -83,3 +83,7 @@ F:\Git_Repos\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Blo
 F:\Git_Repos\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Cursor.xnb
 C:\Users\power\Documents\GitHub\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Character.xnb
 F:\Git_Repos\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Character.xnb
+F:\Git_Repos\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Blocks\DirtBlock.xnb
+F:\Git_Repos\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Blocks\IronBlock.xnb
+F:\Git_Repos\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Blocks\TinBlock.xnb
+F:\Git_Repos\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Blocks\TitaniumBlock.xnb
