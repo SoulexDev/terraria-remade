@@ -17,6 +17,8 @@ namespace TerrariaRemade
         private GraphicsDeviceManager _graphics;
         public SpriteBatch _spriteBatch;
 
+        private UIGridLayout hotBar = new UIGridLayout();
+
         public GameRoot()
         {
             Instance = this;
@@ -39,6 +41,15 @@ namespace TerrariaRemade
             EntityManager.Instantiate(new BlockGrabber());
             EntityManager.Instantiate(new CameraController());
             Cursor.Init();
+
+            for (int i = 0; i < 9; i++)
+            {
+                UIElement itemSlot = new UIElement();
+                itemSlot.renderer.sprite = TextureLoader.itemSlot;
+                itemSlot.transform.scale *= 24;
+
+                Canvas.Instantiate(itemSlot);
+            }
             //TileMap.scale = 3;
 
             //for (int x = 0; x < TileMap.map.GetLength(0); x++)
@@ -77,9 +88,9 @@ namespace TerrariaRemade
 
             _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, transformMatrix: Camera.Instance.Transform);
 
-            EntityManager.Draw(_spriteBatch);
-
             TileManager.Render(_spriteBatch);
+            EntityManager.Draw(_spriteBatch);
+            Canvas.Render(_spriteBatch);
             Cursor.Draw(_spriteBatch);
             //_spriteBatch.Draw(TextureLoader.cursor, Input.MousePosition, null, Color.White, 0, Vector2.Zero, 5, 0, 1);
 

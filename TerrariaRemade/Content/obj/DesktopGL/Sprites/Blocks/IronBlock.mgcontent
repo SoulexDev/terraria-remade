@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>F:/Git_Repos/terraria-remade/TerrariaRemade/Content/Sprites/Blocks/IronBlock.png</SourceFile>
-  <SourceTime>2023-10-18T19:54:14.1473988-07:00</SourceTime>
-  <DestFile>F:/Git_Repos/terraria-remade/TerrariaRemade/Content/bin/DesktopGL/Sprites/Blocks/IronBlock.xnb</DestFile>
-  <DestTime>2023-10-18T19:55:01.5838608-07:00</DestTime>
+  <SourceFile>C:/Users/power/Documents/GitHub/terraria-remade/TerrariaRemade/Content/Sprites/Blocks/IronBlock.png</SourceFile>
+  <SourceTime>2023-10-19T08:23:53.0593285-07:00</SourceTime>
+  <DestFile>C:/Users/power/Documents/GitHub/terraria-remade/TerrariaRemade/Content/bin/DesktopGL/Sprites/Blocks/IronBlock.xnb</DestFile>
+  <DestTime>2023-10-19T14:35:21.8551208-07:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T04:44:56-07:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

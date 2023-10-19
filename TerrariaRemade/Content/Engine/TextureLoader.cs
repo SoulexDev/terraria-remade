@@ -10,9 +10,10 @@ namespace TerrariaRemade.Content.Engine
 {
     static class TextureLoader
     {
-        public static Texture2D cursor;
         public static Texture2D character;
         public static Texture2D shadow;
+
+        //Tiles
         public static Texture2D stoneBlock;
         public static Texture2D grassBlock;
         public static Texture2D dirtBlock;
@@ -20,17 +21,26 @@ namespace TerrariaRemade.Content.Engine
         public static Texture2D ironBlock;
         public static Texture2D titaniumBlock;
 
+        //UIElements
+        public static Texture2D cursor;
+        public static Texture2D itemSlot;
+
         public static void Load(ContentManager content)
-        {
-            cursor = content.Load<Texture2D>("Sprites/Cursor");
+        { 
             character = content.Load<Texture2D>("Sprites/Character");
             shadow = content.Load<Texture2D>("Sprites/Blocks/Shadow");
+
+            //Tiles
             stoneBlock = content.Load<Texture2D>("Sprites/Blocks/StoneBlock");
             grassBlock = content.Load<Texture2D>("Sprites/Blocks/GrassBlock");
             dirtBlock = content.Load<Texture2D>("Sprites/Blocks/DirtBlock");
             tinBlock = content.Load<Texture2D>("Sprites/Blocks/TinBlock");
             ironBlock = content.Load<Texture2D>("Sprites/Blocks/IronBlock");
             titaniumBlock = content.Load<Texture2D>("Sprites/Blocks/TitaniumBlock");
+
+            //UIElements
+            cursor = content.Load<Texture2D>("Sprites/UI/Cursor");
+            itemSlot = content.Load<Texture2D>("Sprites/UI/ItemSlot");
         }
     }
 }

@@ -75,7 +75,6 @@ C:\Users\power\Documents\GitHub\terraria-remade\TerrariaRemade\bin\Debug\net6.0\
 C:\Users\power\Documents\GitHub\terraria-remade\TerrariaRemade\obj\Debug\net6.0\TerrariaRemade.csproj.CopyComplete
 C:\Users\power\Documents\GitHub\terraria-remade\TerrariaRemade\obj\Debug\net6.0\TerrariaRemade.genruntimeconfig.cache
 C:\Users\power\Documents\GitHub\terraria-remade\TerrariaRemade\obj\Debug\net6.0\ref\TerrariaRemade.dll
-C:\Users\power\Documents\GitHub\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Cursor.xnb
 C:\Users\power\Documents\GitHub\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Blocks\GrassBlock.xnb
 C:\Users\power\Documents\GitHub\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Blocks\Shadow.xnb
 F:\Git_Repos\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Blocks\GrassBlock.xnb
@@ -87,3 +86,9 @@ F:\Git_Repos\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Blo
 F:\Git_Repos\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Blocks\IronBlock.xnb
 F:\Git_Repos\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Blocks\TinBlock.xnb
 F:\Git_Repos\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Blocks\TitaniumBlock.xnb
+C:\Users\power\Documents\GitHub\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Blocks\DirtBlock.xnb
+C:\Users\power\Documents\GitHub\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Blocks\IronBlock.xnb
+C:\Users\power\Documents\GitHub\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Blocks\TinBlock.xnb
+C:\Users\power\Documents\GitHub\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\Blocks\TitaniumBlock.xnb
+C:\Users\power\Documents\GitHub\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\UI\Cursor.xnb
+C:\Users\power\Documents\GitHub\terraria-remade\TerrariaRemade\bin\Debug\net6.0\Content\Sprites\UI\ItemSlot.xnb

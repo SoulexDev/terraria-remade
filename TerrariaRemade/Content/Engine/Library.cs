@@ -13,6 +13,7 @@ namespace TerrariaRemade.Content.Engine
         public Vector2 position;
         public float rotation;
         public Vector2 scale;
+
         public Vector2 origin;
 
         public Vector2 forward 
@@ -44,21 +45,15 @@ namespace TerrariaRemade.Content.Engine
         public float layerDepth;
         public Texture2D sprite;
 
-        public void Render(SpriteBatch spriteBatch, Transform transform = null, Vector2 position = default)
+        public void Render(SpriteBatch spriteBatch, Transform transform = null, Vector2 position = default, Vector2 positionOffset = default)
         {
             if (sprite == null)
                 return;
 
-            if(transform == null)
+            if(transform != null)
             {
-                spriteBatch.Draw(sprite, transform.position, null, color, transform.rotation, transform.origin, transform.scale, 0, layerDepth);
+                spriteBatch.Draw(sprite, transform.position + positionOffset, null, color, transform.rotation, transform.origin, transform.scale, 0, layerDepth);
             }
-            else
-            {
-                spriteBatch.Draw(sprite, transform.position, null, color, transform.rotation, transform.origin, transform.scale, 0, layerDepth);
-            }
-            if (sprite == null)
-                return;
         }
         public Vector2 size
         {

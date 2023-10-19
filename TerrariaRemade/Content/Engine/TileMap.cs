@@ -34,6 +34,9 @@ namespace TerrariaRemade.Content.Engine
         }
         public void FillTile(int x, int y, int tileID)
         {
+            if (!TileInBounds(x, y))
+                return;
+
             map[x, y] = tileID;
             updateLighting = true;
         }
