@@ -15,6 +15,10 @@ namespace TerrariaRemade.Content.Engine
         public static Texture2D shadow;
         public static Texture2D stoneBlock;
         public static Texture2D grassBlock;
+        public static Texture2D dirtBlock;
+        public static Texture2D tinBlock;
+        public static Texture2D ironBlock;
+        public static Texture2D titaniumBlock;
 
         public static void Load(ContentManager content)
         {
@@ -23,6 +27,10 @@ namespace TerrariaRemade.Content.Engine
             shadow = content.Load<Texture2D>("Sprites/Blocks/Shadow");
             stoneBlock = content.Load<Texture2D>("Sprites/Blocks/StoneBlock");
             grassBlock = content.Load<Texture2D>("Sprites/Blocks/GrassBlock");
+            dirtBlock = content.Load<Texture2D>("Sprites/Blocks/DirtBlock");
+            tinBlock = content.Load<Texture2D>("Sprites/Blocks/TinBlock");
+            ironBlock = content.Load<Texture2D>("Sprites/Blocks/IronBlock");
+            titaniumBlock = content.Load<Texture2D>("Sprites/Blocks/TitaniumBlock");
         }
     }
 }

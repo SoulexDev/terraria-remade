@@ -35,7 +35,6 @@ namespace TerrariaRemade.Content.Scripts
                 TileMap map = TileManager.GetLocalMap((int)Input.MousePosition.X);
                 if (map == null)
                     return;
-
                 Vector2 tilePos = map.ScreenToTilePosition(Input.MousePosition);
 
                 for (int x = -brushRadius; x < brushRadius; x++)

@@ -108,11 +108,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\power\\Documents\\GitHub\\terraria-remade\\TerrariaRemade\\TerrariaRemade.csproj",
+      "projectUniqueName": "F:\\Git_Repos\\terraria-remade\\TerrariaRemade\\TerrariaRemade.csproj",
       "projectName": "TerrariaRemade",
-      "projectPath": "C:\\Users\\power\\Documents\\GitHub\\terraria-remade\\TerrariaRemade\\TerrariaRemade.csproj",
+      "projectPath": "F:\\Git_Repos\\terraria-remade\\TerrariaRemade\\TerrariaRemade.csproj",
       "packagesPath": "C:\\Users\\power\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\power\\Documents\\GitHub\\terraria-remade\\TerrariaRemade\\obj\\",
+      "outputPath": "F:\\Git_Repos\\terraria-remade\\TerrariaRemade\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -170,7 +170,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   }

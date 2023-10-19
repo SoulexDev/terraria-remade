@@ -17,6 +17,9 @@ namespace TerrariaRemade.Content.Engine
         public static Vector2 MousePosition { get { return new Vector2(mouseState.X, mouseState.Y)
                     + Camera.Instance.transform.position 
                     - GameRoot.ScreenSize / 2; } }
+
+        private static int previousScrollWheelValue;
+        public static int scrollWheelValue;
         public static void Update()
         {
             lastKeyboardState = keyboardState;
@@ -26,6 +29,9 @@ namespace TerrariaRemade.Content.Engine
             keyboardState = Keyboard.GetState();
             mouseState = Mouse.GetState();
             gamepadState = GamePad.GetState(PlayerIndex.One);
+
+            scrollWheelValue = mouseState.ScrollWheelValue - previousScrollWheelValue;
+            previousScrollWheelValue = mouseState.ScrollWheelValue;
         }
         public static bool GetMouseDown(string inputName)
         {
