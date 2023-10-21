@@ -18,6 +18,7 @@ namespace TerrariaRemade
         public SpriteBatch _spriteBatch;
 
         private UIGridLayout hotBar = new UIGridLayout();
+        private InventoryManager inventoryManager = new InventoryManager();
 
         public GameRoot()
         {
@@ -37,28 +38,33 @@ namespace TerrariaRemade
 
             base.Initialize();
 
+            ItemManager.CreateItems();
+
             EntityManager.Instantiate(Camera.Instance);
             EntityManager.Instantiate(new BlockGrabber());
             EntityManager.Instantiate(new CameraController());
             Cursor.Init();
 
+            UIGridLayout gridLayout = new UIGridLayout();
+            gridLayout.elementsSizeX = 3;
+
             for (int i = 0; i < 9; i++)
             {
-                UIElement itemSlot = new UIElement();
+                UISlot itemSlot = new UISlot();
                 itemSlot.renderer.sprite = TextureLoader.itemSlot;
-                itemSlot.transform.scale *= 24;
+                itemSlot.transform.scale *= 3;
 
                 Canvas.Instantiate(itemSlot);
-            }
-            //TileMap.scale = 3;
+                gridLayout.uiElements.Add(itemSlot);
 
-            //for (int x = 0; x < TileMap.map.GetLength(0); x++)
-            //{
-            //    for (int y = 0; y < TileMap.map.GetLength(1); y++)
-            //    {
-            //        TileMap.FillTile(x, y, 2);
-            //    }
-            //}
+                InventorySlot slot = new InventorySlot(itemSlot);
+
+                inventoryManager.slots.Add(slot);
+            }
+
+            inventoryManager.AddItem(ItemManager.grassBlock);
+            inventoryManager.AddItem(ItemManager.stoneBlock);
+            inventoryManager.AddItem(ItemManager.dirtBlock);
 
             WorldGenerator.GenerateWorld();
         }
@@ -77,6 +83,7 @@ namespace TerrariaRemade
 
             Input.Update();
             EntityManager.Update();
+            Canvas.UpdateCanvas();
             Cursor.Update();
 
             base.Update(gameTime);

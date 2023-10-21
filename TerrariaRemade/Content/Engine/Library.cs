@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace TerrariaRemade.Content.Engine
     {
         public Vector2 position;
         public float rotation;
-        public Vector2 scale;
+        public Vector2 scale = Vector2.One;
 
         public Vector2 origin;
 
@@ -45,14 +46,21 @@ namespace TerrariaRemade.Content.Engine
         public float layerDepth;
         public Texture2D sprite;
 
+        //private Vector2 previousPosition;
+
         public void Render(SpriteBatch spriteBatch, Transform transform = null, Vector2 position = default, Vector2 positionOffset = default)
         {
             if (sprite == null)
+            {
+                Debug.WriteLine("stfu");
                 return;
+            }
 
             if(transform != null)
             {
+                //Vector2 delta = previousPosition - transform.position;
                 spriteBatch.Draw(sprite, transform.position + positionOffset, null, color, transform.rotation, transform.origin, transform.scale, 0, layerDepth);
+                //previousPosition = transform.position;
             }
         }
         public Vector2 size

@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace TerrariaRemade.Content.Engine
 {
-    public class UIGridLayout : Entity
+    public class UIGridLayout
     {
         public UIGridLayout()
         {
             uiElements.CollectionChanged += UpdateLayout;
         }
-        public Transform transform;
+        public Transform transform = new Transform();
         public ObservableCollection<UIElement> uiElements = new ObservableCollection<UIElement>();
         public int elementsSizeX;
         //public UIAlignment alignment;
@@ -24,31 +24,20 @@ namespace TerrariaRemade.Content.Engine
         private void UpdateLayout(object sender, NotifyCollectionChangedEventArgs e)
         {
             currentXSize = 0;
-            for (int x = 0, y = 0; x < uiElements.Count; x++)
+            for (int x = 0, y = 0, xPos = 0; x < uiElements.Count; x++)
             {
-                if (x + 1 >= elementsSizeX)
+                if (xPos + 1 > elementsSizeX)
+                {
                     y++;
+                    xPos = 0;
+                }
+                    
                 UIElement element = uiElements[x];
 
-                currentXSize += element.renderer.size.X;
-
-                element.transform.position = new Vector2(currentXSize, y * element.renderer.size.Y) + transform.position;
+                Vector2 position = new Vector2(xPos, y) * element.renderer.size * element.transform.scale;
+                element.transform.position = position + transform.position;
+                xPos++;
             }
-        }
-
-        public override void Awake()
-        {
-            
-        }
-
-        public override void Start()
-        {
-            
-        }
-
-        public override void Update()
-        {
-            
         }
     }
 }
